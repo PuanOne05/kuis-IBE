@@ -946,7 +946,7 @@
                         <div class="info-grid-item">
                             <i class="fas fa-question-circle"></i>
                             <h4>Total Soal</h4>
-                            <p>10 Pertanyaan</p>
+                            <p>13 Pertanyaan</p>
                         </div>
                         <div class="info-grid-item">
                             <i class="fas fa-hourglass-half"></i>
@@ -1007,7 +1007,7 @@
     <div id="quizActiveSection" class="quiz-active-section">
         <div class="quiz-header-glass">
             <div class="quiz-stats">
-                <div class="stat-chip"><i class="fas fa-pen-fancy"></i> <span id="questionCounter">Soal 1/10</span></div>
+                <div class="stat-chip"><i class="fas fa-pen-fancy"></i> <span id="questionCounter">Soal 1/13</span></div>
                 <div class="stat-chip"><i class="fas fa-flask"></i> Polimer & Molekul</div>
             </div>
             <div class="timer-glass" id="timer">
@@ -1169,9 +1169,10 @@
     }
 
     // ==========================================================
-    // 3. DATA SOAL (10 Soal)
+    // 3. DATA SOAL (10 Soal Sains + 3 Soal Joke Lanjutan)
     // ==========================================================
     const questions = [
+        // 10 Soal Sains Utama
         {
             question: "Manakah pernyataan yang benar tetapi tidak lengkap tentang molekul unsur?",
             options: [
@@ -1256,6 +1257,27 @@
                 "Atom bebas"
             ],
             correct: 2
+        },
+        // ==================== 3 SOAL JOKE LANJUTAN ====================
+        {
+            question: "Apakah angin mempunyai KTP?",
+            options: ["Punya", "Tidak"],
+            correct: 1 // Tidak
+        },
+        {
+            question: "Lanjutkan syair berikut : \"aldi's burger cempaka putih rotinya.....\"",
+            options: [
+                "JKT48 judika pamungkas",
+                "Sheila on 7 tulus idgitaf",
+                "Dewa 19 yura yunita afgan",
+                "Juicy luicy mahalini rizky febian"
+            ],
+            correct: 3 // Juicy luicy mahalini rizky febian
+        },
+        {
+            question: "Siapa klub sepakbola terbaik?",
+            options: ["Real Madrid", "Barcelona", "Chelsea", "Arsenal"],
+            correct: 1 // Barcelona
         }
     ];
 
