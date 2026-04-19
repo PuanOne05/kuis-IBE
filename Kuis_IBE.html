@@ -26,7 +26,6 @@
             overflow-x: hidden;
         }
 
-        /* Animated Background Particles */
         .particles {
             position: fixed;
             top: 0;
@@ -61,7 +60,6 @@
             }
         }
 
-        /* Main Container */
         .main-container {
             max-width: 1300px;
             margin: 0 auto;
@@ -81,7 +79,6 @@
             }
         }
 
-        /* Glassmorphism Header */
         .header {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
@@ -153,7 +150,6 @@
             margin-right: 8px;
         }
 
-        /* Home Section */
         .home-section {
             transition: all 0.3s ease;
         }
@@ -162,7 +158,6 @@
             display: none;
         }
 
-        /* Welcome Section */
         .welcome-section {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
             border-radius: 30px;
@@ -207,7 +202,6 @@
             margin: 0 auto;
         }
 
-        /* Features Section */
         .features-section {
             margin-bottom: 30px;
         }
@@ -273,7 +267,6 @@
             line-height: 1.5;
         }
 
-        /* Grafik Area */
         .grafik-area {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -340,7 +333,6 @@
             border-radius: 12px;
         }
 
-        /* Kuis Area */
         .kuis-area {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -349,7 +341,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Start Section */
         .info-card {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
             border-radius: 24px;
@@ -467,7 +458,6 @@
             transform: scale(0.98);
         }
 
-        /* Quiz Active Section */
         .quiz-active-section {
             display: none;
         }
@@ -614,7 +604,6 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
 
-        /* Modal Hasil Kuis */
         .result-modal {
             display: none;
             position: fixed;
@@ -745,7 +734,6 @@
             transform: scale(1.02);
         }
 
-        /* Modal Curang */
         .modal-glass {
             display: none;
             position: fixed;
@@ -805,7 +793,6 @@
             transform: scale(1.05);
         }
 
-        /* Custom Alert */
         .custom-alert {
             position: fixed;
             top: 50%;
@@ -851,7 +838,6 @@
             }
         }
 
-        /* Responsive */
         @media (max-width: 968px) {
             .features-grid {
                 grid-template-columns: 1fr;
@@ -889,11 +875,9 @@
 </head>
 <body>
 
-<!-- Animated Particles -->
 <div class="particles" id="particles"></div>
 
 <div class="main-container">
-    <!-- Header -->
     <div class="header">
         <h1><i class="fas fa-flask"></i> Ini Ceritanya Kuis <i class="fas fa-dna"></i></h1>
         <div class="badge-group">
@@ -903,9 +887,7 @@
         </div>
     </div>
 
-    <!-- HOME SECTION -->
     <div id="homeSection" class="home-section">
-        <!-- Welcome Section -->
         <div class="welcome-section">
             <div class="welcome-icon">
                 <i class="fas fa-microscope"></i>
@@ -914,7 +896,6 @@
             <p>Pelajari perbedaan molekul unsur, molekul senyawa, monomer, dan polimer melalui kuis interaktif yang menarik</p>
         </div>
 
-        <!-- Features Section -->
         <div class="features-section">
             <div class="features-title">
                 <i class="fas fa-gem"></i> Mengapa Harus Ikut Kuis Ini?
@@ -938,7 +919,6 @@
             </div>
         </div>
 
-        <!-- Kuis Area (Start Section) -->
         <div class="kuis-area">
             <div id="startSection">
                 <div class="info-card">
@@ -979,7 +959,6 @@
         </div>
     </div>
 
-    <!-- Visualisasi Molekul -->
     <div class="grafik-area" id="grafikArea">
         <div class="grafik-header">
             <h3><i class="fas fa-atom"></i> Visualisasi Struktur Molekul</h3>
@@ -1003,7 +982,6 @@
         </div>
     </div>
 
-    <!-- Quiz Active Section -->
     <div id="quizActiveSection" class="quiz-active-section">
         <div class="quiz-header-glass">
             <div class="quiz-stats">
@@ -1031,24 +1009,19 @@
     </div>
 </div>
 
-<!-- Modal Hasil Kuis -->
 <div id="resultModal" class="result-modal">
     <div class="result-modal-content">
         <div class="result-modal-header">
             <h2><i class="fas fa-chart-simple"></i> Hasil Kuis</h2>
         </div>
-        <div class="result-stats" id="resultStats">
-            <!-- Dinamis -->
-        </div>
+        <div class="result-stats" id="resultStats"></div>
         <div class="result-chart">
             <canvas id="resultChart" width="400" height="200"></canvas>
         </div>
         <div class="result-detail-table">
             <h3><i class="fas fa-list-check"></i> Detail Jawaban</h3>
             <div style="overflow-x: auto;">
-                <table class="detail-table" id="detailTable">
-                    <!-- Dinamis -->
-                </table>
+                <table class="detail-table" id="detailTable"></table>
             </div>
         </div>
         <button class="btn-close-result" onclick="closeResultModal()">
@@ -1057,7 +1030,6 @@
     </div>
 </div>
 
-<!-- Modal Curang -->
 <div id="cheatModal" class="modal-glass">
     <div class="modal-content-glass">
         <i class="fas fa-skull-crossbones" style="font-size: 3em; color: #ff6b6b; margin-bottom: 15px;"></i>
@@ -1070,12 +1042,9 @@
 </div>
 
 <script>
-    // ==========================================================
-    // 1. ANIMATED PARTICLES
-    // ==========================================================
     function createParticles() {
         const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i <50; i++) {
+        for (let i = 0; i < 50; i++) {
             const particle = document.createElement('div');
             particle.classList.add('particle');
             const size = Math.random() * 5 + 2;
@@ -1090,19 +1059,14 @@
     }
     createParticles();
 
-    // ==========================================================
-    // 2. VISUALISASI MOLEKUL DENGAN CHART.JS
-    // ==========================================================
     let chartInstance = null;
     let resultChartInstance = null;
     
     function loadChart() {
         if (chartInstance) return;
-        
         const categories = ['Molekul Unsur', 'Molekul Senyawa', 'Polimer'];
         const complexityData = [2, 3, 100];
         const bondStrength = [1.5, 2.5, 4.0];
-        
         const ctx = document.getElementById('moleculeChart').getContext('2d');
         chartInstance = new Chart(ctx, {
             type: 'bar',
@@ -1131,158 +1095,48 @@
                 responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    legend: {
-                        labels: {
-                            color: '#ccc',
-                            font: { size: 12 }
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0,0,0,0.8)',
-                        titleColor: '#fff',
-                        bodyColor: '#ccc'
-                    },
-                    title: {
-                        display: true,
-                        text: 'Perbandingan Struktur Molekul',
-                        color: '#fff',
-                        font: { size: 14 }
-                    }
+                    legend: { labels: { color: '#ccc', font: { size: 12 } } },
+                    tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', titleColor: '#fff', bodyColor: '#ccc' },
+                    title: { display: true, text: 'Perbandingan Struktur Molekul', color: '#fff', font: { size: 14 } }
                 },
                 scales: {
-                    x: {
-                        ticks: { color: '#aaa' },
-                        grid: { color: 'rgba(255,255,255,0.05)' }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Skala Kompleksitas',
-                            color: '#aaa'
-                        },
-                        ticks: { color: '#aaa' },
-                        grid: { color: 'rgba(255,255,255,0.05)' }
-                    }
+                    x: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    y: { title: { display: true, text: 'Skala Kompleksitas', color: '#aaa' }, ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.05)' } }
                 }
             }
         });
     }
 
-    // ==========================================================
-    // 3. DATA SOAL (10 Soal Sains + 3 Soal Joke Lanjutan)
-    // ==========================================================
-    const questions = [
-        // 10 Soal Sains Utama
-        {
-            question: "Manakah pernyataan yang benar tetapi tidak lengkap tentang molekul unsur?",
-            options: [
-                "Terdiri dari atom sejenis tanpa ikatan",
-                "Terdiri dari atom sejenis yang dapat berikatan",
-                "Selalu berbentuk diatomik",
-                "Tidak dapat bereaksi"
-            ],
-            correct: 1
-        },
-        {
-            question: "Di antara berikut, yang bukan molekul senyawa meskipun tampak kompleks adalah:",
-            options: ["CO₂", "H₂O", "O₃", "CO"],
-            correct: 2
-        },
-        {
-            question: "Perbedaan paling mendasar antara molekul unsur dan molekul senyawa adalah:",
-            options: ["Jumlah atom", "Massa molekul", "Jenis atom penyusun", "Bentuk molekul"],
-            correct: 2
-        },
-        {
-            question: "Pernyataan yang paling tepat namun sering disalahartikan tentang polimer adalah:",
-            options: [
-                "Semua polimer bersifat alami",
-                "Semua polimer bersifat sintetis",
-                "Polimer tersusun dari unit berulang yang identik atau berbeda",
-                "Polimer tidak memiliki struktur tetap"
-            ],
-            correct: 2
-        },
-        {
-            question: "Jika suatu zat tersusun dari atom sejenis tetapi memiliki jumlah atom berbeda (misal O₂ dan O₃), maka zat tersebut:",
-            options: [
-                "Termasuk molekul senyawa",
-                "Bukan molekul",
-                "Tetap termasuk molekul unsur",
-                "Termasuk polimer"
-            ],
-            correct: 2
-        },
-        {
-            question: "Yang menjadi kunci pembeda antara monomer dan polimer adalah:",
-            options: ["Warna zat", "Panjang rantai struktur", "Wujud zat", "Massa atom"],
-            correct: 1
-        },
-        {
-            question: "Pernyataan berikut yang keliru tetapi terlihat benar adalah:",
-            options: [
-                "Molekul senyawa tersusun dari atom berbeda",
-                "Molekul unsur bisa terdiri lebih dari dua atom",
-                "Semua molekul tersusun dari atom sejenis",
-                "Polimer terbentuk dari monomer"
-            ],
-            correct: 2
-        },
-        {
-            question: "Dalam konteks pembelajaran, polimer dianggap berbeda dari molekul biasa karena:",
-            options: [
-                "Tidak memiliki ikatan",
-                "Ukurannya sangat kecil",
-                "Memiliki struktur berulang panjang",
-                "Tidak tersusun dari atom"
-            ],
-            correct: 2
-        },
-        {
-            question: "Manakah pernyataan yang benar untuk keduanya (molekul & polimer)?",
-            options: [
-                "Tidak memiliki struktur",
-                "Tersusun dari atom-atom yang berikatan",
-                "Selalu berupa gas",
-                "Tidak dapat bereaksi"
-            ],
-            correct: 1
-        },
-        {
-            question: "Jika suatu zat terdiri dari gabungan atom berbeda dan membentuk unit berulang panjang, maka zat tersebut:",
-            options: [
-                "Molekul unsur",
-                "Molekul senyawa sederhana",
-                "Polimer",
-                "Atom bebas"
-            ],
-            correct: 2
-        },
-        // ==================== 3 SOAL JOKE LANJUTAN ====================
-        {
-            question: "Apakah angin mempunyai KTP?",
-            options: ["Punya", "Tidak"],
-            correct: 1 // Tidak
-        },
-        {
-            question: "Lanjutkan syair berikut : \"aldi's burger cempaka putih rotinya.....\"",
-            options: [
-                "JKT48 judika pamungkas",
-                "Sheila on 7 tulus idgitaf",
-                "Dewa 19 yura yunita afgan",
-                "Juicy luicy mahalini rizky febian"
-            ],
-            correct: 3 // Juicy luicy mahalini rizky febian
-        },
-        {
-            question: "Siapa klub sepakbola terbaik?",
-            options: ["Real Madrid", "Barcelona", "Chelsea", "Arsenal"],
-            correct: 1 // Barcelona
-        }
+    // BANK SOAL (10 SAINS + 3 JOKE)
+    const bankSoal = [
+        // 10 Soal Sains
+        { question: "Manakah pernyataan yang benar tetapi tidak lengkap tentang molekul unsur?", options: ["Terdiri dari atom sejenis tanpa ikatan", "Terdiri dari atom sejenis yang dapat berikatan", "Selalu berbentuk diatomik", "Tidak dapat bereaksi"], correct: 1 },
+        { question: "Di antara berikut, yang bukan molekul senyawa meskipun tampak kompleks adalah:", options: ["CO₂", "H₂O", "O₃", "CO"], correct: 2 },
+        { question: "Perbedaan paling mendasar antara molekul unsur dan molekul senyawa adalah:", options: ["Jumlah atom", "Massa molekul", "Jenis atom penyusun", "Bentuk molekul"], correct: 2 },
+        { question: "Pernyataan yang paling tepat namun sering disalahartikan tentang polimer adalah:", options: ["Semua polimer bersifat alami", "Semua polimer bersifat sintetis", "Polimer tersusun dari unit berulang yang identik atau berbeda", "Polimer tidak memiliki struktur tetap"], correct: 2 },
+        { question: "Jika suatu zat tersusun dari atom sejenis tetapi memiliki jumlah atom berbeda (misal O₂ dan O₃), maka zat tersebut:", options: ["Termasuk molekul senyawa", "Bukan molekul", "Tetap termasuk molekul unsur", "Termasuk polimer"], correct: 2 },
+        { question: "Yang menjadi kunci pembeda antara monomer dan polimer adalah:", options: ["Warna zat", "Panjang rantai struktur", "Wujud zat", "Massa atom"], correct: 1 },
+        { question: "Pernyataan berikut yang keliru tetapi terlihat benar adalah:", options: ["Molekul senyawa tersusun dari atom berbeda", "Molekul unsur bisa terdiri lebih dari dua atom", "Semua molekul tersusun dari atom sejenis", "Polimer terbentuk dari monomer"], correct: 2 },
+        { question: "Dalam konteks pembelajaran, polimer dianggap berbeda dari molekul biasa karena:", options: ["Tidak memiliki ikatan", "Ukurannya sangat kecil", "Memiliki struktur berulang panjang", "Tidak tersusun dari atom"], correct: 2 },
+        { question: "Manakah pernyataan yang benar untuk keduanya (molekul & polimer)?", options: ["Tidak memiliki struktur", "Tersusun dari atom-atom yang berikatan", "Selalu berupa gas", "Tidak dapat bereaksi"], correct: 1 },
+        { question: "Jika suatu zat terdiri dari gabungan atom berbeda dan membentuk unit berulang panjang, maka zat tersebut:", options: ["Molekul unsur", "Molekul senyawa sederhana", "Polimer", "Atom bebas"], correct: 2 },
+        // 3 Soal JOKE
+        { question: "Apakah angin mempunyai KTP?", options: ["Punya", "Tidak"], correct: 1 },
+        { question: "Lanjutkan syair berikut : \"aldi's burger cempaka putih rotinya.....\"", options: ["JKT48 judika pamungkas", "Sheila on 7 tulus idgitaf", "Dewa 19 yura yunita afgan", "Juicy luicy mahalini rizky febian"], correct: 3 },
+        { question: "Siapa klub sepakbola terbaik?", options: ["Real Madrid", "Barcelona", "Chelsea", "Arsenal"], correct: 1 }
     ];
 
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    let questions = [];
     let currentQuestion = 0;
-    let userAnswers = new Array(questions.length).fill(null);
+    let userAnswers = [];
     let timeLeft = 120;
     let timerInterval = null;
     let isFullScreen = false;
@@ -1290,112 +1144,71 @@
     let isShowingAlert = false;
     let cheatDetectionEnabled = true;
 
-    // ==========================================================
-    // 4. CUSTOM ALERT
-    // ==========================================================
     function showCustomAlert(message, onClose) {
         if (isShowingAlert) return;
         isShowingAlert = true;
-        
         const alertDiv = document.createElement('div');
         alertDiv.className = 'custom-alert';
-        alertDiv.innerHTML = `
-            <i class="fas fa-info-circle" style="font-size: 3em; color: #fbbf24;"></i>
-            <p>${message}</p>
-            <button>OK</button>
-        `;
+        alertDiv.innerHTML = `<i class="fas fa-info-circle" style="font-size: 3em; color: #fbbf24;"></i><p>${message}</p><button>OK</button>`;
         document.body.appendChild(alertDiv);
-        
         const btn = alertDiv.querySelector('button');
-        btn.onclick = () => {
-            alertDiv.remove();
-            isShowingAlert = false;
-            if (onClose) onClose();
-        };
+        btn.onclick = () => { alertDiv.remove(); isShowingAlert = false; if (onClose) onClose(); };
     }
 
-    // ==========================================================
-    // 5. ANTI-CHEAT
-    // ==========================================================
     document.addEventListener('visibilitychange', function() {
-        if (cheatDetectionEnabled && document.hidden && isQuizActive && isFullScreen && !isShowingAlert) {
-            showCheatWarning();
-        }
+        if (cheatDetectionEnabled && document.hidden && isQuizActive && isFullScreen && !isShowingAlert) showCheatWarning();
     });
 
     function exitHandler() {
-        if (cheatDetectionEnabled && !document.fullscreenElement && !document.webkitFullscreenElement && 
-            !document.mozFullScreenElement && !document.msFullscreenElement) {
-            if (isQuizActive && isFullScreen && !isShowingAlert) {
-                isFullScreen = false;
-                showCheatWarning();
-            }
-        } else {
-            isFullScreen = true;
-        }
+        if (cheatDetectionEnabled && !document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+            if (isQuizActive && isFullScreen && !isShowingAlert) { isFullScreen = false; showCheatWarning(); }
+        } else { isFullScreen = true; }
     }
-
     document.addEventListener('fullscreenchange', exitHandler);
     document.addEventListener('webkitfullscreenchange', exitHandler);
     document.addEventListener('mozfullscreenchange', exitHandler);
     document.addEventListener('MSFullscreenChange', exitHandler);
 
     function showCheatWarning() {
-        if (!isQuizActive) return;
-        if (isShowingAlert) return;
-        
+        if (!isQuizActive || isShowingAlert) return;
         isQuizActive = false;
         cheatDetectionEnabled = false;
         if (timerInterval) clearInterval(timerInterval);
         document.getElementById('cheatModal').style.display = 'flex';
     }
 
-    function refreshPage() {
-        location.reload();
-    }
+    function refreshPage() { location.reload(); }
 
-    // ==========================================================
-    // 6. KUIS FUNCTIONS
-    // ==========================================================
     async function mulaiKuis() {
+        questions = shuffleArray([...bankSoal]);
+        userAnswers = new Array(questions.length).fill(null);
+        currentQuestion = 0;
+        timeLeft = 120;
+        
         const elem = document.documentElement;
         try {
             if (elem.requestFullscreen) await elem.requestFullscreen();
             else if (elem.webkitRequestFullscreen) await elem.webkitRequestFullscreen();
             else if (elem.msRequestFullscreen) await elem.msRequestFullscreen();
             isFullScreen = true;
-        } catch (err) {
-            console.log("Fullscreen error:", err);
-        }
+        } catch (err) { console.log("Fullscreen error:", err); }
 
-        const homeSection = document.getElementById('homeSection');
-        homeSection.classList.add('hidden');
-        
-        const grafikArea = document.getElementById('grafikArea');
-        grafikArea.classList.add('visible');
-        
-        const quizActiveSection = document.getElementById('quizActiveSection');
-        quizActiveSection.classList.add('visible');
-        
+        document.getElementById('homeSection').classList.add('hidden');
+        document.getElementById('grafikArea').classList.add('visible');
+        document.getElementById('quizActiveSection').classList.add('visible');
         loadChart();
-        
-        setTimeout(() => {
-            if (chartInstance) chartInstance.resize();
-        }, 100);
-
+        setTimeout(() => { if (chartInstance) chartInstance.resize(); }, 100);
         isQuizActive = true;
-        
         startTimer();
         loadQuestion();
     }
 
     function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
         timerInterval = setInterval(() => {
             if (timeLeft <= 0 && isQuizActive) {
                 clearInterval(timerInterval);
-                showCustomAlert("⏰ WAKTU HABIS! Kuis akan di-refresh.", () => {
-                    refreshPage();
-                });
+                showCustomAlert("⏰ WAKTU HABIS! Kuis akan di-refresh.", () => refreshPage());
             } else if (timeLeft > 0 && isQuizActive) {
                 timeLeft--;
                 document.getElementById('timer').innerHTML = `<i class="fas fa-stopwatch"></i> ${timeLeft}`;
@@ -1407,19 +1220,14 @@
         const q = questions[currentQuestion];
         document.getElementById('questionText').innerHTML = q.question;
         document.getElementById('questionCounter').innerHTML = `Soal ${currentQuestion + 1}/${questions.length}`;
-        
         let optionsHtml = '';
         q.options.forEach((opt, idx) => {
             const isSelected = userAnswers[currentQuestion] === idx;
-            const selectedClass = isSelected ? 'selected' : '';
-            optionsHtml += `
-                <div class="option-glass ${selectedClass}" onclick="selectOption(${idx})">
-                    <span style="font-weight: bold; margin-right: 12px;">${String.fromCharCode(65+idx)}.</span> ${opt}
-                </div>
-            `;
+            optionsHtml += `<div class="option-glass ${isSelected ? 'selected' : ''}" onclick="selectOption(${idx})">
+                <span style="font-weight: bold; margin-right: 12px;">${String.fromCharCode(65+idx)}.</span> ${opt}
+            </div>`;
         });
         document.getElementById('optionsContainer').innerHTML = optionsHtml;
-        
         const progress = ((currentQuestion + 1) / questions.length) * 100;
         document.getElementById('progressFill').style.width = `${progress}%`;
         document.getElementById('progressText').innerHTML = `${Math.round(progress)}% Selesai`;
@@ -1427,7 +1235,6 @@
 
     function selectOption(optionIndex) {
         userAnswers[currentQuestion] = optionIndex;
-        
         const options = document.querySelectorAll('.option-glass');
         options.forEach((opt, idx) => {
             if (idx === optionIndex) opt.classList.add('selected');
@@ -1440,7 +1247,6 @@
             showCustomAlert("⚠️ Silakan pilih jawaban terlebih dahulu sebelum melanjutkan!");
             return;
         }
-        
         if (currentQuestion < questions.length - 1) {
             currentQuestion++;
             loadQuestion();
@@ -1451,17 +1257,12 @@
         }
     }
 
-    // ==========================================================
-    // 7. RESULT MODAL WITH CHART AND TABLE
-    // ==========================================================
     function showResultModal() {
         let score = 0;
         const resultDetails = [];
-        
         for (let i = 0; i < questions.length; i++) {
             const isCorrect = userAnswers[i] === questions[i].correct;
             if (isCorrect) score++;
-            
             resultDetails.push({
                 number: i + 1,
                 question: questions[i].question,
@@ -1470,88 +1271,32 @@
                 isCorrect: isCorrect
             });
         }
+        // 🔥 FORMAT NILAI JADI 2 DIGIT DI BELAKANG KOMA
+        const nilaiRaw = (score / questions.length) * 100;
+        const nilaiFormatted = nilaiRaw.toFixed(2);
         
-        const nilai = (score / questions.length) * 100;
-        const correctCount = score;
-        const wrongCount = questions.length - score;
-        
-        // Update stats
         document.getElementById('resultStats').innerHTML = `
-            <div class="result-stat-card">
-                <i class="fas fa-check-circle" style="color: #4ade80;"></i>
-                <div class="stat-value">${correctCount}</div>
-                <div class="stat-label">Benar</div>
-            </div>
-            <div class="result-stat-card">
-                <i class="fas fa-times-circle" style="color: #f87171;"></i>
-                <div class="stat-value">${wrongCount}</div>
-                <div class="stat-label">Salah</div>
-            </div>
-            <div class="result-stat-card">
-                <i class="fas fa-star" style="color: #fbbf24;"></i>
-                <div class="stat-value">${nilai}</div>
-                <div class="stat-label">Nilai</div>
-            </div>
+            <div class="result-stat-card"><i class="fas fa-check-circle" style="color: #4ade80;"></i><div class="stat-value">${score}</div><div class="stat-label">Benar</div></div>
+            <div class="result-stat-card"><i class="fas fa-times-circle" style="color: #f87171;"></i><div class="stat-value">${questions.length - score}</div><div class="stat-label">Salah</div></div>
+            <div class="result-stat-card"><i class="fas fa-star" style="color: #fbbf24;"></i><div class="stat-value">${nilaiFormatted}</div><div class="stat-label">Nilai</div></div>
         `;
-        
-        // Create result chart
         const ctx = document.getElementById('resultChart').getContext('2d');
-        if (resultChartInstance) {
-            resultChartInstance.destroy();
-        }
+        if (resultChartInstance) resultChartInstance.destroy();
         resultChartInstance = new Chart(ctx, {
             type: 'doughnut',
-            data: {
-                labels: ['Benar', 'Salah'],
-                datasets: [{
-                    data: [correctCount, wrongCount],
-                    backgroundColor: ['#4ade80', '#f87171'],
-                    borderWidth: 0,
-                    borderRadius: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        labels: { color: '#fff', font: { size: 12 } }
-                    }
-                }
-            }
+            data: { labels: ['Benar', 'Salah'], datasets: [{ data: [score, questions.length - score], backgroundColor: ['#4ade80', '#f87171'], borderWidth: 0, borderRadius: 10 }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#fff', font: { size: 12 } } } } }
         });
-        
-        // Create detail table
-        let tableHtml = `
-            <thead>
-                <tr><th>No</th><th>Soal</th><th>Jawaban User</th><th>Jawaban Benar</th><th>Status</th></tr>
-            </thead>
-            <tbody>
-        `;
-        
+        let tableHtml = `<thead><tr><th>No</th><th>Soal</th><th>Jawaban User</th><th>Jawaban Benar</th><th>Status</th></tr></thead><tbody>`;
         resultDetails.forEach(detail => {
-            tableHtml += `
-                <tr>
-                    <td>${detail.number}</td>
-                    <td>${detail.question.substring(0, 50)}${detail.question.length > 50 ? '...' : ''}</td>
-                    <td>${detail.userAnswer}</td>
-                    <td>${detail.correctAnswer}</td>
-                    <td class="${detail.isCorrect ? 'correct' : 'wrong'}">${detail.isCorrect ? '✓ Benar' : '✗ Salah'}</td>
-                </tr>
-            `;
+            tableHtml += `<tr><td>${detail.number}</td><td>${detail.question.substring(0, 50)}${detail.question.length > 50 ? '...' : ''}</td><td>${detail.userAnswer}</td><td>${detail.correctAnswer}</td><td class="${detail.isCorrect ? 'correct' : 'wrong'}">${detail.isCorrect ? '✓ Benar' : '✗ Salah'}</td></tr>`;
         });
         tableHtml += `</tbody>`;
         document.getElementById('detailTable').innerHTML = tableHtml;
-        
-        // Show modal
         document.getElementById('resultModal').style.display = 'flex';
-        
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
+        if (document.exitFullscreen) document.exitFullscreen();
     }
-    
+
     function closeResultModal() {
         document.getElementById('resultModal').style.display = 'none';
         refreshPage();
