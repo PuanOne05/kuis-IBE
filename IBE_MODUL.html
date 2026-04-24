@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Modul Pembelajaran | Ilmu Bahan Elektronika</title>
-    <!-- Chart.js untuk grafik visualisasi -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts premium modern -->
@@ -256,6 +254,15 @@
             border-color: white;
         }
 
+        /* Style deskripsi teks (konsisten) */
+        .desc-text {
+            color: #b9c8ff;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
         /* quiz selector */
         .quiz-bab-selector {
             display: flex;
@@ -304,63 +311,6 @@
             transform: scale(0.98);
         }
 
-        /* grafik cantik seperti contoh */
-        .grafik-area {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: none;
-        }
-
-        .grafik-area.visible {
-            display: block;
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        .grafik-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-
-        .grafik-header h3 {
-            color: white;
-        }
-
-        .legend {
-            display: flex;
-            gap: 20px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #ccc;
-            font-size: 0.8rem;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 3px;
-            border-radius: 2px;
-        }
-
-        canvas {
-            max-width: 100%;
-            border-radius: 16px;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         @media (max-width: 680px) {
             body { padding: 15px; }
             .menu-btn { padding: 0.7rem 1.5rem; font-size: 1rem; }
@@ -391,29 +341,14 @@
         <button class="menu-btn" id="btnVideo"><i class="fas fa-video"></i> Video Pembelajaran</button>
     </div>
 
-    <!-- Panel Dinamis (tanpa log aktivitas) -->
+    <!-- Panel Dinamis (tanpa popup) -->
     <div class="content-panel" id="dynamicPanel">
         <div class="panel-header" id="panelHeader">✨ Selamat Datang ✨</div>
         <div id="panelBody">
             <div class="empty-state">
                 <i class="fas fa-caret-right"></i> Pilih tombol <strong>Materi, Quiz, atau Video</strong> untuk menjelajahi 17 bab.<br>
-                Setiap materi, quiz, dan video akan memberikan notifikasi ringan.
+                Setiap materi, quiz, dan video akan tercatat di console browser (F12).
             </div>
-        </div>
-    </div>
-
-    <!-- Area grafik tambahan sebagai pemanis visual seperti contoh PPT -->
-    <div class="grafik-area" id="grafikArea">
-        <div class="grafik-header">
-            <h3><i class="fas fa-chart-simple"></i> Visualisasi Konsep Bahan Elektronika</h3>
-            <div class="legend">
-                <div class="legend-item"><div class="legend-color" style="background: #3b82f6;"></div>Konduktivitas</div>
-                <div class="legend-item"><div class="legend-color" style="background: #ef4444;"></div>Resistivitas</div>
-                <div class="legend-item"><div class="legend-color" style="background: #10b981;"></div>Band Gap</div>
-            </div>
-        </div>
-        <div class="grafik-container" style="background: rgba(0,0,0,0.3); border-radius: 20px; padding: 15px;">
-            <canvas id="elektroChart" width="800" height="350"></canvas>
         </div>
     </div>
 </div>
@@ -427,57 +362,17 @@
     const panelHeader = document.getElementById('panelHeader');
     const panelBody = document.getElementById('panelBody');
 
-    // Fungsi notifikasi sederhana (alert ringan + console friendly)
-    function showNotif(message, type = 'info') {
-        // Notifikasi menggunakan alert kecil yang modern? Lebih baik alert biasa agar user aware.
-        // Tapi agar tidak mengganggu bisa pakai alert. Karena diminta hilangkan log, kita cukup alert.
-        alert(`📢 ${message}`);
+    // Fungsi log ke console saja (TANPA POPUP)
+    function silentLog(message, type = 'info') {
         console.log(`[${type.toUpperCase()}] ${message}`);
     }
 
-    // Grafik cantik (Chart.js) seperti contoh tampilan interaktif
-    let chartInstance = null;
-    function loadElectroChart() {
-        const ctx = document.getElementById('elektroChart')?.getContext('2d');
-        if (!ctx) return;
-        if (chartInstance) chartInstance.destroy();
-        chartInstance = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Konduktor (Tembaga)', 'Semikonduktor (Silikon)', 'Isolator (Kaca)'],
-                datasets: [
-                    { label: 'Konduktivitas (×10⁶ S/m)', data: [58, 0.005, 0.00001], backgroundColor: 'rgba(59,130,246,0.7)', borderRadius: 10 },
-                    { label: 'Band Gap (eV)', data: [0.1, 1.1, 8.5], backgroundColor: 'rgba(16,185,129,0.7)', borderRadius: 10 }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: { labels: { color: '#eee', font: { size: 11 } } },
-                    tooltip: { backgroundColor: 'rgba(0,0,0,0.8)' }
-                },
-                scales: {
-                    x: { ticks: { color: '#ccc' }, grid: { color: 'rgba(255,255,255,0.1)' } },
-                    y: { ticks: { color: '#ccc' }, grid: { color: 'rgba(255,255,255,0.1)' } }
-                }
-            }
-        });
-    }
-
-    // Tampilkan Grafik jika ingin menambah estetika
-    function showGrafik() {
-        const grafikDiv = document.getElementById('grafikArea');
-        if (grafikDiv) grafikDiv.classList.add('visible');
-        if (!chartInstance) loadElectroChart(); else chartInstance.resize();
-    }
-
-    // ======================= 1. FITUR MATERI (17 button, log via notifikasi) =======================
+    // ======================= 1. FITUR MATERI (17 button) =======================
     function renderMateri() {
         panelHeader.innerHTML = '<i class="fas fa-book"></i> 📖 Materi Pembelajaran (Raw)';
-        let html = `<div style="margin-bottom: 1rem; color:#b9c8ff;">🎯 Klik salah satu bab untuk mengakses materi. (konten materi masih raw / akan diisi)</div>
+        let html = `<div class="desc-text">🎯 Klik salah satu bab untuk mengakses materi. (konten materi masih raw / akan diisi)</div>
                     <div class="bab-grid" id="materiBabGrid"></div>
-                    <div class="empty-state">📄 Materi akan diisi kemudian. Sekadar preview & notifikasi akses bab.</div>`;
+                    <div class="empty-state">📄 Materi akan diisi kemudian. Klik bab untuk melihat log di console (F12).</div>`;
         panelBody.innerHTML = html;
         const grid = document.getElementById('materiBabGrid');
         for (let i = 0; i < TOTAL_BAB; i++) {
@@ -485,7 +380,7 @@
             btn.className = 'bab-btn';
             btn.innerText = babNames[i];
             btn.addEventListener('click', ((idx) => () => {
-                showNotif(`📘 MATERI: Membuka ${babNames[idx]} (konten raw - belum tersedia)`, 'materi');
+                silentLog(`📘 MATERI: Membuka ${babNames[idx]} (konten raw - belum tersedia)`, 'materi');
             })(i));
             grid.appendChild(btn);
         }
@@ -495,12 +390,12 @@
     function renderQuiz() {
         panelHeader.innerHTML = '<i class="fas fa-puzzle-piece"></i> 📝 Quiz Interaktif';
         let html = `
-            <div><strong>🎯 Pilih Bab untuk Quiz (setiap bab memberi notifikasi):</strong></div>
+            <div class="desc-text">🎯 Pilih Bab untuk Quiz (setiap bab memberi log di console):</div>
             <div class="quiz-bab-selector" id="quizBabList"></div>
             <div style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem;">
-                <div><strong>🏆 Quiz Akhir (Komprehensif Bab 1-17)</strong></div>
+                <div class="desc-text"><strong>🏆 Quiz Akhir (Komprehensif Bab 1-17)</strong></div>
                 <button id="finalAllQuizBtn" class="final-quiz-btn"><i class="fas fa-star-of-life"></i> Mulai Quiz Gabungan 17 Bab</button>
-                <div class="empty-state" style="font-size:0.85rem;">⚠️ Soal quiz masih raw (belum tersedia), hanya simulasi akses.</div>
+                <div class="empty-state" style="font-size:0.85rem;">⚠️ Soal quiz masih raw (belum tersedia), hanya simulasi akses di console.</div>
             </div>
         `;
         panelBody.innerHTML = html;
@@ -510,14 +405,14 @@
             btn.innerText = babNames[i];
             btn.style.background = "#2c3e66";
             btn.addEventListener('click', ((idx) => () => {
-                showNotif(`📝 QUIZ: Masuk ke quiz ${babNames[idx]} (konten raw, quiz belum tersedia)`, 'quiz');
+                silentLog(`📝 QUIZ: Masuk ke quiz ${babNames[idx]} (konten raw, quiz belum tersedia)`, 'quiz');
             })(i));
             quizContainer.appendChild(btn);
         }
         const finalBtn = document.getElementById('finalAllQuizBtn');
         if (finalBtn) {
             finalBtn.addEventListener('click', () => {
-                showNotif(`🎯 QUIZ AKHIR: Akses quiz komprehensif Bab 1 s/d 17 (konten raw)`, 'quiz-final');
+                silentLog(`🎯 QUIZ AKHIR: Akses quiz komprehensif Bab 1 s/d 17 (konten raw)`, 'quiz-final');
             });
         }
     }
@@ -525,9 +420,9 @@
     // ======================= 3. FITUR VIDEO PEMBELAJARAN =======================
     function renderVideo() {
         panelHeader.innerHTML = '<i class="fas fa-video"></i> 🎬 Video Pembelajaran per Bab';
-        let html = `<div style="margin-bottom: 1rem;">Pilih bab untuk mengakses video pembelajaran (konten video raw):</div>
+        let html = `<div class="desc-text">🎯 Pilih bab untuk mengakses video pembelajaran (konten video raw):</div>
                     <div class="bab-grid" id="videoBabGrid"></div>
-                    <div class="empty-state">📹 Video akan ditambahkan kemudian. Untuk saat ini hanya simulasi akses bab.</div>`;
+                    <div class="empty-state">📹 Video akan ditambahkan kemudian. Klik bab untuk melihat log di console.</div>`;
         panelBody.innerHTML = html;
         const gridVideo = document.getElementById('videoBabGrid');
         for (let i = 0; i < TOTAL_BAB; i++) {
@@ -535,46 +430,47 @@
             btn.className = 'bab-btn';
             btn.innerText = babNames[i];
             btn.addEventListener('click', ((idx) => () => {
-                showNotif(`🎥 VIDEO: Mengakses video pembelajaran ${babNames[idx]} (link/embed masih raw)`, 'video');
+                silentLog(`🎥 VIDEO: Mengakses video pembelajaran ${babNames[idx]} (link/embed masih raw)`, 'video');
             })(i));
             gridVideo.appendChild(btn);
         }
     }
 
-    // ================ Handler Menu Utama & Tampilan Grafik & Inisialisasi =============
+    // ================ Handler Menu Utama (tanpa popup) =============
     let currentMode = null;
 
     function setMode(mode) {
         currentMode = mode;
-        if (mode === 'materi') renderMateri();
-        else if (mode === 'quiz') renderQuiz();
-        else if (mode === 'video') renderVideo();
-        // tampilkan grafik agar selalu menarik
-        showGrafik();
+        if (mode === 'materi') {
+            renderMateri();
+            silentLog('📑 Membuka menu MATERI - 17 bab siap diakses', 'menu');
+        }
+        else if (mode === 'quiz') {
+            renderQuiz();
+            silentLog('❓ Membuka menu QUIZ - Pilih bab untuk quiz / quiz gabungan', 'menu');
+        }
+        else if (mode === 'video') {
+            renderVideo();
+            silentLog('📹 Membuka menu VIDEO - 17 bab video pembelajaran', 'menu');
+        }
     }
 
-    // Event listeners menu
+    // Event listeners menu (TANPA POPUP)
     document.getElementById('btnMateri').addEventListener('click', () => {
         setMode('materi');
-        // Tidak ada log, hanya notifikasi opsional? Bisa juga diam saja. Tapi untuk user feedback kita beri notifikasi ringan.
-        // Agar pengguna tahu menu berpindah, kita bisa kasih alert opsional atau tidak sama sekali? biarkan diam.
-        // Namun untuk pengalaman yang baik, kita tampilkan alert kecil. Saya akan beri notifikasi ringan.
-        showNotif('📑 Membuka menu MATERI - 17 bab siap diakses', 'menu');
     });
     document.getElementById('btnQuiz').addEventListener('click', () => {
         setMode('quiz');
-        showNotif('❓ Membuka menu QUIZ - Pilih bab untuk quiz / quiz gabungan', 'menu');
     });
     document.getElementById('btnVideo').addEventListener('click', () => {
         setMode('video');
-        showNotif('📹 Membuka menu VIDEO - 17 bab video pembelajaran', 'menu');
     });
 
-    // membuat partikel (seperti contoh animasi)
+    // Membuat partikel animasi latar
     function createParticles() {
         const particlesContainer = document.getElementById('particles');
         if (!particlesContainer) return;
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i <40; i++) {
             const particle = document.createElement('div');
             particle.classList.add('particle');
             const size = Math.random() * 5 + 2;
@@ -589,12 +485,11 @@
     }
     createParticles();
 
-    // Tampilkan grafik saat load serta inisial animasi
+    // Tampilan awal
     window.addEventListener('load', () => {
-        showGrafik();
-        // panel sapaan awal
         panelHeader.innerHTML = '<i class="fas fa-graduation-cap"></i> Selamat Belajar';
-        panelBody.innerHTML = `<div class="empty-state"><i class="fas fa-microchip fa-3x" style="margin-bottom: 15px; display: block;"></i> Selamat datang di Modul Pembelajaran Ilmu Bahan Elektronika.<br>🎓 Pilih Materi, Quiz, atau Video untuk memulai eksplorasi 17 bab.<br><br>✨ Setiap bab akan menampilkan notifikasi (konten masih raw).</div>`;
+        panelBody.innerHTML = `<div class="empty-state"><i class="fas fa-microchip fa-3x" style="margin-bottom: 15px; display: block;"></i> Selamat datang di Modul Pembelajaran Ilmu Bahan Elektronika.<br>🎓 Pilih Materi, Quiz, atau Video untuk memulai eksplorasi 17 bab.<br><br>✨ Setiap klik akan tercatat di console browser (tekan F12).</div>`;
+        silentLog('🚀 Modul Ilmu Bahan Elektronika siap digunakan. Tidak ada popup, semua aktivitas tercatat di console.', 'system');
     });
 </script>
 </body>
