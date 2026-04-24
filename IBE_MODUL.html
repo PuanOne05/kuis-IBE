@@ -223,7 +223,7 @@
             color: transparent;
         }
 
-        /* grid tombol bab (17 button) */
+        /* grid tombol bab (17 button) - Style seragam untuk Materi, Quiz, Video */
         .bab-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(110px, 125px));
@@ -232,6 +232,7 @@
             margin: 1.5rem 0;
         }
 
+        /* Tombol bab seragam dengan animasi hover yang sama */
         .bab-btn {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(102,126,234,0.4);
@@ -241,7 +242,7 @@
             font-size: 1rem;
             color: #e2e8ff;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s ease;
             text-align: center;
             backdrop-filter: blur(4px);
         }
@@ -263,41 +264,34 @@
             letter-spacing: 0.3px;
         }
 
-        /* quiz selector */
-        .quiz-bab-selector {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 2rem;
-            align-items: center;
+        /* Quiz container untuk tombol bab yang sudah menggunakan .bab-btn, sehingga sama persis */
+        .quiz-bab-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 125px));
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
         }
 
-        .quiz-bab-selector button, .final-quiz-btn {
-            background: rgba(102,126,234,0.3);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
-            color: white;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
+        /* Tombol final quiz tetap dengan style spesial namun tetap harmonis */
         .final-quiz-btn {
             background: linear-gradient(135deg, #e67e22, #f39c12);
             font-size: 1rem;
             padding: 0.8rem 2rem;
             border: none;
-        }
-
-        .quiz-bab-selector button:hover {
-            background: #667eea;
-            transform: translateY(-2px);
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+            box-shadow: 0 5px 15px rgba(230,126,34,0.3);
         }
 
         .final-quiz-btn:hover {
             transform: translateY(-3px);
             filter: brightness(1.05);
+            box-shadow: 0 10px 25px rgba(230,126,34,0.5);
         }
 
         .empty-state {
@@ -314,7 +308,7 @@
         @media (max-width: 680px) {
             body { padding: 15px; }
             .menu-btn { padding: 0.7rem 1.5rem; font-size: 1rem; }
-            .bab-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 95px)); }
+            .bab-grid, .quiz-bab-wrapper { grid-template-columns: repeat(auto-fill, minmax(85px, 95px)); }
             .panel-header { font-size: 1.4rem; }
         }
     </style>
@@ -387,11 +381,12 @@
     }
 
     // ======================= 2. FITUR QUIZ (bab & final quiz) =======================
+    // Menggunakan tampilan tombol yang SAMA dengan materi dan video (bab-btn)
     function renderQuiz() {
         panelHeader.innerHTML = '<i class="fas fa-puzzle-piece"></i> 📝 Quiz Interaktif';
         let html = `
             <div class="desc-text">🎯 Pilih Bab untuk Quiz (setiap bab memberi log di console):</div>
-            <div class="quiz-bab-selector" id="quizBabList"></div>
+            <div class="quiz-bab-wrapper" id="quizBabContainer"></div>
             <div style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem;">
                 <div class="desc-text"><strong>🏆 Quiz Akhir (Komprehensif Bab 1-17)</strong></div>
                 <button id="finalAllQuizBtn" class="final-quiz-btn"><i class="fas fa-star-of-life"></i> Mulai Quiz Gabungan 17 Bab</button>
@@ -399,16 +394,18 @@
             </div>
         `;
         panelBody.innerHTML = html;
-        const quizContainer = document.getElementById('quizBabList');
+        
+        const quizContainer = document.getElementById('quizBabContainer');
         for (let i = 0; i < TOTAL_BAB; i++) {
             const btn = document.createElement('button');
+            btn.className = 'bab-btn';  // SAMA persis dengan class tombol materi & video
             btn.innerText = babNames[i];
-            btn.style.background = "#2c3e66";
             btn.addEventListener('click', ((idx) => () => {
                 silentLog(`📝 QUIZ: Masuk ke quiz ${babNames[idx]} (konten raw, quiz belum tersedia)`, 'quiz');
             })(i));
             quizContainer.appendChild(btn);
         }
+        
         const finalBtn = document.getElementById('finalAllQuizBtn');
         if (finalBtn) {
             finalBtn.addEventListener('click', () => {
@@ -470,7 +467,7 @@
     function createParticles() {
         const particlesContainer = document.getElementById('particles');
         if (!particlesContainer) return;
-        for (let i = 0; i <40; i++) {
+        for (let i = 0; i < 40; i++) {
             const particle = document.createElement('div');
             particle.classList.add('particle');
             const size = Math.random() * 5 + 2;
@@ -489,7 +486,7 @@
     window.addEventListener('load', () => {
         panelHeader.innerHTML = '<i class="fas fa-graduation-cap"></i> Selamat Belajar';
         panelBody.innerHTML = `<div class="empty-state"><i class="fas fa-microchip fa-3x" style="margin-bottom: 15px; display: block;"></i> Selamat datang di Modul Pembelajaran Ilmu Bahan Elektronika.<br>🎓 Pilih Materi, Quiz, atau Video untuk memulai eksplorasi 17 bab.<br><br>✨ Setiap klik akan tercatat di console browser (tekan F12).</div>`;
-        silentLog('🚀 Modul Ilmu Bahan Elektronika siap digunakan. Tidak ada popup, semua aktivitas tercatat di console.', 'system');
+        silentLog('🚀 Modul Ilmu Bahan Elektronika siap digunakan. Tombol quiz kini memiliki tampilan & animasi yang sama dengan materi dan video.', 'system');
     });
 </script>
 </body>
