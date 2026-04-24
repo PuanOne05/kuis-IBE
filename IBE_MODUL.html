@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Modul Pembelajaran | Ilmu Bahan Elektronika</title>
+    <!-- Chart.js untuk grafik (opsional, untuk sentuhan visual tambahan) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts premium modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Space Grotesk', sans-serif;
+            background: linear-gradient(145deg, #0f0c29 0%, #1a1a3e 50%, #24243e 100%);
+            min-height: 100vh;
+            padding: 30px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* === ANIMASI MORPH & PARTIKEL SEPERTI PPT === */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(102, 126, 234, 0.4);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Morphing background glass morph */
+        .morph-bg {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(255,215,150,0.2), rgba(100,150,255,0.1));
+            filter: blur(70px);
+            z-index: 0;
+            animation: morphSoft 14s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .morph-bg2 {
+            position: fixed;
+            bottom: -10%;
+            right: -10%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle, rgba(200,180,255,0.25), rgba(80,120,200,0.1));
+            filter: blur(80px);
+            animation: morphSoft 18s infinite reverse ease-in-out;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes morphSoft {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; opacity: 0.5; transform: rotate(0deg); }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 70%; opacity: 0.8; transform: rotate(2deg); }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; opacity: 0.5; transform: rotate(0deg); }
+        }
+
+        .main-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HEADER GLASS */
+        .header {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 30px 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102,126,234,0.15) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 2.3rem;
+            background: linear-gradient(135deg, #fff 0%, #a8b9ff 50%, #667eea 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .badge {
+            background: rgba(102, 126, 234, 0.2);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #a8b9ff;
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px);
+            background: rgba(102, 126, 234, 0.4);
+        }
+
+        /* 3 MENU BUTTON UTAMA (materi, quiz, video) dengan style keren */
+        .menu-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border-radius: 60px;
+            padding: 1rem 2.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border: 1px solid rgba(255,255,245,0.25);
+            cursor: pointer;
+            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-btn i {
+            font-size: 1.6rem;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-6px) scale(1.02);
+            background: linear-gradient(135deg, rgba(102,126,234,0.7), rgba(118,75,162,0.7));
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 20px 30px -10px rgba(102,126,234,0.5);
+        }
+
+        /* PANEL KONTEN UTAMA dengan glassmorphism */
+        .content-panel {
+            background: rgba(20, 20, 50, 0.6);
+            backdrop-filter: blur(18px);
+            border-radius: 48px;
+            padding: 1.8rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.4);
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255,255,245,0.2);
+            margin-top: 0.5rem;
+        }
+
+        .panel-header {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            border-left: 8px solid #667eea;
+            padding-left: 20px;
+            color: white;
+            background: linear-gradient(135deg, #fff, #b9c8ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* grid tombol bab (17 button) */
+        .bab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 125px));
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .bab-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(102,126,234,0.4);
+            padding: 0.8rem 0.5rem;
+            border-radius: 36px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #e2e8ff;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .bab-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(102,126,234,0.5);
+            border-color: white;
+        }
+
+        /* quiz selector */
+        .quiz-bab-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .quiz-bab-selector button, .final-quiz-btn {
+            background: rgba(102,126,234,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .final-quiz-btn {
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+            font-size: 1rem;
+            padding: 0.8rem 2rem;
+            border: none;
+        }
+
+        .quiz-bab-selector button:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .final-quiz-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.05);
+        }
+
+        /* log area */
+        .info-log {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 32px;
+            padding: 1rem 1.5rem;
+            margin-top: 1.8rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            border-left: 5px solid #667eea;
+            max-height: 200px;
+            overflow-y: auto;
+            color: #ccd6f6;
+        }
+
+        .log-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #a8b9ff;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #b9c8ff;
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        /* animasi tambahan */
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* chart tambahan (grafik cantik seperti contoh) */
+        .grafik-area {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        .grafik-area.visible {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .grafik-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .grafik-header h3 {
+            color: white;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ccc;
+            font-size: 0.8rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        canvas {
+            max-width: 100%;
+            border-radius: 16px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 680px) {
+            body { padding: 15px; }
+            .menu-btn { padding: 0.7rem 1.5rem; font-size: 1rem; }
+            .bab-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 95px)); }
+            .panel-header { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="morph-bg"></div>
+<div class="morph-bg2"></div>
+<div class="particles" id="particles"></div>
+
+<div class="main-container">
+    <div class="header">
+        <h1><i class="fas fa-microchip"></i> Modul Pembelajaran <br> Ilmu Bahan Elektronika</h1>
+        <div class="badge-group">
+            <span class="badge"><i class="fas fa-atom"></i> 17 Bab Komprehensif</span>
+            <span class="badge"><i class="fas fa-flask"></i> Bahan Semikonduktor</span>
+            <span class="badge"><i class="fas fa-chart-line"></i> Karakterisasi Material</span>
+        </div>
+    </div>
+
+    <!-- 3 Tombol Utama -->
+    <div class="menu-cards">
+        <button class="menu-btn" id="btnMateri"><i class="fas fa-book-open"></i> Materi</button>
+        <button class="menu-btn" id="btnQuiz"><i class="fas fa-puzzle-piece"></i> Quiz</button>
+        <button class="menu-btn" id="btnVideo"><i class="fas fa-video"></i> Video Pembelajaran</button>
+    </div>
+
+    <!-- Panel Dinamis -->
+    <div class="content-panel" id="dynamicPanel">
+        <div class="panel-header" id="panelHeader">✨ Selamat Datang ✨</div>
+        <div id="panelBody">
+            <div class="empty-state">
+                <i class="fas fa-caret-right"></i> Pilih tombol <strong>Materi, Quiz, atau Video</strong> untuk menjelajahi 17 bab.<br>
+                Setiap aksi akan tercatat dalam log aktivitas.
+            </div>
+        </div>
+        <div id="logArea" class="info-log">
+            <div class="log-title"><i class="fas fa-terminal"></i> Log Aktivitas</div>
+            <div id="logMessages">✅ Modul siap. Gunakan menu di atas.<br></div>
+        </div>
+    </div>
+
+    <!-- Area grafik tambahan (seperti contoh PPT) sebagai pemanis -->
+    <div class="grafik-area" id="grafikArea">
+        <div class="grafik-header">
+            <h3><i class="fas fa-chart-simple"></i> Visualisasi Konsep Bahan Elektronika</h3>
+            <div class="legend">
+                <div class="legend-item"><div class="legend-color" style="background: #3b82f6;"></div>Konduktivitas</div>
+                <div class="legend-item"><div class="legend-color" style="background: #ef4444;"></div>Resistivitas</div>
+                <div class="legend-item"><div class="legend-color" style="background: #10b981;"></div>Band Gap</div>
+            </div>
+        </div>
+        <div class="grafik-container" style="background: rgba(0,0,0,0.3); border-radius: 20px; padding: 15px;">
+            <canvas id="elektroChart" width="800" height="350"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ======================= KONFIGURASI 17 BAB =======================
+    const TOTAL_BAB = 17;
+    const babNames = Array.from({ length: TOTAL_BAB }, (_, i) => `Bab ${i+1}`);
+
+    // Elemen DOM
+    const panelHeader = document.getElementById('panelHeader');
+    const panelBody = document.getElementById('panelBody');
+    const logMessagesDiv = document.getElementById('logMessages');
+
+    // Fungsi log
+    function addLog(message) {
+        const logEntry = document.createElement('div');
+        logEntry.innerHTML = `📌 ${new Date().toLocaleTimeString()} - ${message}`;
+        logMessagesDiv.appendChild(logEntry);
+        logMessagesDiv.scrollTop = logMessagesDiv.scrollHeight;
+    }
+
+    // Grafik cantik (Chart.js) seperti contoh tampilan interaktif
+    let chartInstance = null;
+    function loadElectroChart() {
+        const ctx = document.getElementById('elektroChart')?.getContext('2d');
+        if (!ctx) return;
+        if (chartInstance) chartInstance.destroy();
+        chartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Konduktor', 'Semikonduktor', 'Isolator'],
+                datasets: [
+                    { label: 'Konduktivitas (×10⁶ S/m)', data: [58, 0.005, 0.00001], backgroundColor: 'rgba(59,130,246,0.7)', borderRadius: 10 },
+                    { label: 'Band Gap (eV)', data: [0.1, 1.1, 8.5], backgroundColor: 'rgba(16,185,129,0.7)', borderRadius: 10 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { labels: { color: '#eee', font: { size: 11 } } },
+                    tooltip: { backgroundColor: 'rgba(0,0,0,0.8)' }
+                },
+                scales: {
+                    x: { ticks: { color: '#ccc' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { ticks: { color: '#ccc' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+    }
+
+    // Tampilkan Grafik jika ingin menambah estetika (muncul saat pertama atau menu)
+    function showGrafik() {
+        const grafikDiv = document.getElementById('grafikArea');
+        if (grafikDiv) grafikDiv.classList.add('visible');
+        if (!chartInstance) loadElectroChart(); else chartInstance.resize();
+    }
+
+    // ======================= 1. FITUR MATERI =======================
+    function renderMateri() {
+        panelHeader.innerHTML = '<i class="fas fa-book"></i> 📖 Materi Pembelajaran (Raw)';
+        let html = `<div style="margin-bottom: 1rem; color:#b9c8ff;">🎯 Klik salah satu bab untuk mencatat log akses materi. (konten materi masih raw)</div>
+                    <div class="bab-grid" id="materiBabGrid"></div>
+                    <div class="empty-state">📄 Materi akan diisi kemudian. Sekadar preview & log akses.</div>`;
+        panelBody.innerHTML = html;
+        const grid = document.getElementById('materiBabGrid');
+        for (let i = 0; i < TOTAL_BAB; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'bab-btn';
+            btn.innerText = babNames[i];
+            btn.addEventListener('click', ((idx) => () => {
+                addLog(`📘 MATERI: Membuka ${babNames[idx]} (konten raw - belum tersedia)`);
+                alert(`📘 Materi ${babNames[idx]} masih dalam tahap pengembangan. Cek log activity.`);
+            })(i));
+            grid.appendChild(btn);
+        }
+    }
+
+    // ======================= 2. FITUR QUIZ =======================
+    function renderQuiz() {
+        panelHeader.innerHTML = '<i class="fas fa-puzzle-piece"></i> 📝 Quiz Interaktif';
+        let html = `
+            <div><strong>🎯 Pilih Bab untuk Quiz (setiap bab mencatat log):</strong></div>
+            <div class="quiz-bab-selector" id="quizBabList"></div>
+            <div style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem;">
+                <div><strong>🏆 Quiz Akhir (Komprehensif Bab 1-17)</strong></div>
+                <button id="finalAllQuizBtn" class="final-quiz-btn"><i class="fas fa-star-of-life"></i> Mulai Quiz Gabungan 17 Bab</button>
+                <div class="empty-state" style="font-size:0.85rem;">⚠️ Soal quiz masih raw (belum tersedia), hanya untuk simulasi log.</div>
+            </div>
+        `;
+        panelBody.innerHTML = html;
+        const quizContainer = document.getElementById('quizBabList');
+        for (let i = 0; i < TOTAL_BAB; i++) {
+            const btn = document.createElement('button');
+            btn.innerText = babNames[i];
+            btn.style.background = "#2c3e66";
+            btn.addEventListener('click', ((idx) => () => {
+                addLog(`📝 QUIZ: Masuk ke quiz ${babNames[idx]} (konten raw, quiz belum tersedia)`);
+                alert(`🧪 Quiz ${babNames[idx]} belum dibuat. Namun log sudah tercatat.`);
+            })(i));
+            quizContainer.appendChild(btn);
+        }
+        const finalBtn = document.getElementById('finalAllQuizBtn');
+        if (finalBtn) {
+            finalBtn.addEventListener('click', () => {
+                addLog(`🎯 QUIZ AKHIR: Akses quiz komprehensif Bab 1 s/d 17 (konten raw)`);
+                alert(`📢 Quiz komprehensif 17 Bab masih dalam tahap pengembangan. Terima kasih!`);
+            });
+        }
+    }
+
+    // ======================= 3. FITUR VIDEO PEMBELAJARAN =======================
+    function renderVideo() {
+        panelHeader.innerHTML = '<i class="fas fa-video"></i> 🎬 Video Pembelajaran per Bab';
+        let html = `<div style="margin-bottom: 1rem;">Pilih bab untuk mencatat log akses video (konten video raw):</div>
+                    <div class="bab-grid" id="videoBabGrid"></div>
+                    <div class="empty-state">📹 Video akan ditambahkan kemudian. Untuk saat ini hanya log akses.</div>`;
+        panelBody.innerHTML = html;
+        const gridVideo = document.getElementById('videoBabGrid');
+        for (let i = 0; i < TOTAL_BAB; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'bab-btn';
+            btn.innerText = babNames[i];
+            btn.addEventListener('click', ((idx) => () => {
+                addLog(`🎥 VIDEO: Mengakses video pembelajaran ${babNames[idx]} (link/embed masih raw)`);
+                alert(`🎬 Video ${babNames[idx]} belum tersedia, namun akses tercatat di log.`);
+            })(i));
+            gridVideo.appendChild(btn);
+        }
+    }
+
+    // ================ Handler Menu Utama & Tampilan Grafik & Inisialisasi =============
+    let currentMode = null;
+
+    function setMode(mode) {
+        currentMode = mode;
+        if (mode === 'materi') renderMateri();
+        else if (mode === 'quiz') renderQuiz();
+        else if (mode === 'video') renderVideo();
+        // tampilkan grafik agar selalu menarik
+        showGrafik();
+    }
+
+    // Event listeners menu
+    document.getElementById('btnMateri').addEventListener('click', () => {
+        setMode('materi');
+        addLog(`📑 Buka menu MATERI - 17 bab tersedia (log akses per bab)`);
+    });
+    document.getElementById('btnQuiz').addEventListener('click', () => {
+        setMode('quiz');
+        addLog(`❓ Buka menu QUIZ - Pilih bab untuk quiz / quiz gabungan 1-17 (raw)`);
+    });
+    document.getElementById('btnVideo').addEventListener('click', () => {
+        setMode('video');
+        addLog(`📹 Buka menu VIDEO - 17 bab video pembelajaran (log akses)`);
+    });
+
+    // membuat partikel (seperti contoh)
+    function createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        if (!particlesContainer) return;
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 5 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+            particle.style.animationDelay = `${Math.random() * 10}s`;
+            particle.style.opacity = Math.random() * 0.5;
+            particlesContainer.appendChild(particle);
+        }
+    }
+    createParticles();
+
+    // Tampilkan grafik saat load serta inisial animasi
+    window.addEventListener('load', () => {
+        showGrafik();
+        addLog("🚀 Modul Ilmu Bahan Elektronika aktif. Animasi morph & glassmorphism menyala.");
+        // default panel sapaan
+        panelHeader.innerHTML = '<i class="fas fa-graduation-cap"></i> Selamat Belajar';
+        panelBody.innerHTML = `<div class="empty-state"><i class="fas fa-microchip fa-3x" style="margin-bottom: 15px; display: block;"></i> Selamat datang di Modul Pembelajaran Ilmu Bahan Elektronika.<br>🎓 Pilih Materi, Quiz, atau Video untuk memulai eksplorasi 17 bab.</div>`;
+    });
+</script>
+</body>
+</html>
